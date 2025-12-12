@@ -63,6 +63,10 @@ export default async function({log = true, sandbox = false, community = {}, extr
     }
   }
 
+  //Env overrides
+  if (process.env.PORT)
+    conf.settings.port = Number(process.env.PORT)
+
   if (!conf.settings.templates)
     conf.settings.templates = {default: "classic", enabled: []}
   if (!conf.settings.plugins)
