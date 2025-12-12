@@ -105,6 +105,10 @@ dist
 
 # User settings
 settings.json
+devbox.d/
+devbox.json
+devbox.lock
+CLAUDE.md
 
 # Community templates
 source/templates/.community
