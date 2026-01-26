@@ -1,6 +1,6 @@
 //Imports
-import octokit from "@octokit/graphql"
-import OctokitRest from "@octokit/rest"
+import { graphql } from "@octokit/graphql"
+import { Octokit } from "@octokit/rest"
 import axios from "axios"
 import compression from "compression"
 import crypto from "crypto"
@@ -54,7 +54,7 @@ export default async function({sandbox = false} = {}) {
     console.debug(util.inspect(conf.settings, {depth: Infinity, maxStringLength: 256}))
 
   //Load octokits
-  const api = {graphql: octokit.graphql.defaults({headers: {authorization: `token ${token}`}, baseUrl: conf.settings.api?.graphql ?? undefined}), rest: new OctokitRest.Octokit({auth: token, baseUrl: conf.settings.api?.rest ?? undefined})}
+  const api = {graphql: graphql.defaults({headers: {authorization: `token ${token}`}, baseUrl: conf.settings.api?.graphql ?? undefined}), rest: new Octokit({auth: token, baseUrl: conf.settings.api?.rest ?? undefined})}
   //Apply mocking if needed
   if (mock)
     Object.assign(api, await mocks(api))
@@ -66,7 +66,7 @@ export default async function({sandbox = false} = {}) {
     if (authenticated.has(session)) {
       const {login, token} = authenticated.get(session)
       console.debug(`metrics/app/session/${login} > authenticated with session ${session.substring(0, 6)}, using custom octokit`)
-      return {login, graphql: octokit.graphql.defaults({headers: {authorization: `token ${token}`}}), rest: new OctokitRest.Octokit({auth: token})}
+      return {login, graphql: graphql.defaults({headers: {authorization: `token ${token}`}}), rest: new Octokit({auth: token})}
     }
     else if (session) {
       console.debug(`metrics/app/session > unknown session ${session.substring(0, 6)}, using default octokit`)
