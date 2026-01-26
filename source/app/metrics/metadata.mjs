@@ -203,11 +203,11 @@ metadata.plugin = async function({__plugins, __templates, name, logger}) {
                   try {
                     value = JSON.parse(value)
                   }
-                  catch (error) {
+                  catch (_error) {
                     try {
                       value = JSON.parse(decodeURIComponent(value))
                     }
-                    catch (error) {
+                    catch (_error) {
                       logger(`metrics/inputs > failed to parse json : ${value}`)
                       value = JSON.parse(defaulted)
                     }

@@ -224,8 +224,8 @@ export default async function({login, imports, data, q, account}, {enabled = fal
                 const status = error.response?.status
                 const description = error.response.data?.error_description ?? null
                 const message = `API returned ${status}${description ? ` (${description})` : ""}`
-                error = error.response?.data ?? null
-                throw {error: {message, instance: error}, ...raw}
+                const instance = error.response?.data ?? null
+                throw {error: {message, instance}, ...raw}
               }
               throw error
             }
@@ -253,8 +253,8 @@ export default async function({login, imports, data, q, account}, {enabled = fal
                 const status = error.response?.status
                 const description = error.response.data?.message ?? null
                 const message = `API returned ${status}${description ? ` (${description})` : ""}`
-                error = error.response?.data ?? null
-                throw {error: {message, instance: error}, ...raw}
+                const instance = error.response?.data ?? null
+                throw {error: {message, instance}, ...raw}
               }
               throw error
             }

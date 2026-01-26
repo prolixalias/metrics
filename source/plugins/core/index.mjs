@@ -75,8 +75,8 @@ export default async function({login, q}, {conf, data, rest, graphql, plugins, q
         const result = {name, result: data.plugins[name]}
         console.debug(imports.util.inspect(result, {depth: Infinity, maxStringLength: 256, getters: true}))
         await callbacks?.plugin?.(login, name, !data.plugins[name].error, data.plugins[name]).catch(error => console.debug(`metrics/compute/${login}/plugins/callbacks > ${name} > ${error}`))
-        return result
       }
+      return {name, result: data.plugins[name]}
     })())
   }
 

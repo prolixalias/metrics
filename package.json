@@ -2,6 +2,7 @@
   "name": "metrics",
   "version": "3.35.0-beta",
   "description": "An infographics generator with 40+ plugins and 300+ options to display stats about your GitHub account and render them as SVG, Markdown, PDF or JSON!",
+  "type": "module",
   "main": "index.mjs",
   "scripts": {
     "start": "node source/app/web/index.mjs",
@@ -13,7 +14,7 @@
     "presets": "node .github/scripts/presets_examples.mjs",
     "quickstart": "node .github/scripts/quickstart/index.mjs",
     "preview": "node .github/scripts/preview.mjs",
-    "linter": "eslint source/**/*.mjs --quiet",
+    "linter": "npx eslint source/**/*.mjs --quiet",
     "dev": "nodemon source/app/web/index.mjs -e mjs,css,ejs,json",
     "indepth": "node source/plugins/languages/analyzers.mjs"
   },
@@ -67,8 +68,10 @@
     "xml-formatter": "^3.5.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.0.0",
     "dprint": "^0.41.0",
-    "eslint": "^8.49.0",
+    "eslint": "^9.0.0",
+    "globals": "^15.0.0",
     "jest": "^29.7.0"
   },
   "jest": {

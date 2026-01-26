@@ -44,26 +44,28 @@ export class Analyzer {
     if (this.consumed)
       throw new Error("This analyzer has already been consumed, another instance needs to be created to perform a new analysis")
     this.consumed = true
-    const results = await new Promise(async solve => {
-      let completed = false
-      if (Number.isFinite(this.timeout.global)) {
-        this.debug(`timeout set to ${this.timeout.global}m`)
-        setTimeout(() => {
-          if (!completed) {
-            try {
-              this.debug(`reached maximum execution time of ${this.timeout.global}m for analysis`)
-              this.results.partial.global = true
-              solve(this.results)
+    const results = await new Promise(solve => {
+      (async () => {
+        let completed = false
+        if (Number.isFinite(this.timeout.global)) {
+          this.debug(`timeout set to ${this.timeout.global}m`)
+          setTimeout(() => {
+            if (!completed) {
+              try {
+                this.debug(`reached maximum execution time of ${this.timeout.global}m for analysis`)
+                this.results.partial.global = true
+                solve(this.results)
+              }
+              catch {
+                //Ignore errors
+              }
             }
-            catch {
-              //Ignore errors
-            }
-          }
-        }, this.timeout.global * 60 * 1000)
-      }
-      await runner()
-      completed = true
-      solve(this.results)
+          }, this.timeout.global * 60 * 1000)
+        }
+        await runner()
+        completed = true
+        solve(this.results)
+      })()
     })
     return results
   }

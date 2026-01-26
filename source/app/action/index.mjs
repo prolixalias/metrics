@@ -351,12 +351,13 @@ function quit(reason) {
       info("Markdown cache", _markdown_cache)
     if (/insights/.test(convert)) {
       try {
-        await new Promise(async (solve, reject) => {
+        await new Promise((solve, reject) => {
           let stdout = ""
           setTimeout(() => reject("Timeout while waiting for Insights webserver"), 5 * 60 * 1000)
-          const web = await processes.spawn("node", ["/metrics/source/app/web/index.mjs"], {env: {...process.env}})
-          web.stdout.on("data", data => (console.debug(`web > ${data}`), stdout += data, /Server ready !/.test(stdout) ? solve() : null))
-          web.stderr.on("data", data => console.debug(`web > ${data}`))
+          processes.spawn("node", ["/metrics/source/app/web/index.mjs"], {env: {...process.env}}).then(web => {
+            web.stdout.on("data", data => (console.debug(`web > ${data}`), stdout += data, /Server ready !/.test(stdout) ? solve() : null))
+            web.stderr.on("data", data => console.debug(`web > ${data}`))
+          }).catch(reject)
         })
         info("Insights webserver", "ok")
       }
