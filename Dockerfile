@@ -18,7 +18,7 @@ RUN chmod +x /metrics/source/app/action/index.mjs \
   && apt-get install -y chromium fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst fonts-freefont-ttf libxss1 --no-install-recommends \
   # Install deno for miscellaneous scripts
   && apt-get install -y curl unzip \
-  && curl -fsSL curl -fsSL https://deno.land/install.sh | DENO_INSTALL=/usr/local sh \
+  && curl -fsSL https://deno.land/install.sh | DENO_INSTALL=/usr/local sh \
   # Install ruby to support github licensed gem
   && apt-get install -y ruby-full git g++ cmake pkg-config libssl-dev xz-utils zlib1g-dev libxml2-dev libxslt-dev \
   && gem install nokogiri -- --use-system-libraries \
